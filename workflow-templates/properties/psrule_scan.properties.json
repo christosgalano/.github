@@ -1,7 +1,7 @@
 {
     "name": "Bicep PSRule scan",
     "description": "Scan a bicep template using PSRule and publish the results.",
-    "iconName": "azure",
+    "iconName": "octicon codescan",
     "categories": [
         "Bicep"
     ]
