@@ -3,6 +3,6 @@
     "description": "Destroy a deployment's resource group/s and all of their resources.",
     "iconName": "azure",
     "categories": [
-        "utilities"
+        "Automation"
     ]
 }

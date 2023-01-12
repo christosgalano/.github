@@ -4,7 +4,6 @@
     "iconName": "azure",
     "categories": [
         "code-quality",
-        "code-scanning",
         "bicep"
     ]
 }

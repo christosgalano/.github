@@ -3,7 +3,7 @@
     "description": "Deploy a bicep template to Azure.",
     "iconName": "azure",
     "categories": [
-        "deployment",
-        "bicep"
+        "Deployment",
+        "Bicep"
     ]
 }
