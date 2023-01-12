@@ -3,6 +3,6 @@
     "description": "Scan a bicep template using PSRule and publish the results.",
     "iconName": "azure",
     "categories": [
-        "Bicep"
+        "Code quality"
     ]
 }
