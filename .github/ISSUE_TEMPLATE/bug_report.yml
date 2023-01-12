@@ -2,14 +2,14 @@ name: 🐛Bug Report
 description: File a bug report here
 title: "[BUG]: "
 labels: ["bug"]
-assignees: ["AnishDe12020"]
+assignees: ["christosgalano"]
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this bug report 🤗
         Make sure there aren't any open/closed issues for this topic 😃
-        
+
   - type: textarea
     id: bug-description
     attributes:
@@ -17,7 +17,7 @@ body:
       description: Give us a brief description of what happened and what should have happened
     validations:
       required: true
-      
+
   - type: textarea
     id: steps-to-reproduce
     attributes:
@@ -30,7 +30,7 @@ body:
         4. See error
     validations:
       required: true
-      
+
   - type: textarea
     id: additional-information
     attributes:
