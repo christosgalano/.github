@@ -1,0 +1,8 @@
+{
+    "name": "Destroy an Azure infrastructure",
+    "description": "Destroy a deployment's resource group/s and all of their resources.",
+    "iconName": "azure",
+    "categories": [
+        "utilities"
+    ]
+}

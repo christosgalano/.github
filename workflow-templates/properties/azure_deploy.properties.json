@@ -1,0 +1,9 @@
+{
+    "name": "Deploy Bicep to Azure",
+    "description": "Deploy a bicep template to Azure.",
+    "iconName": "azure",
+    "categories": [
+        "deployment",
+        "bicep"
+    ]
+}
