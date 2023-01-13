@@ -1,7 +1,7 @@
-name: 🐛Bug Report
-description: File a bug report here
-title: "[BUG]: "
-labels: ["bug"]
+name: Content
+description: Reminder to take care of cloud-on-rails content
+title: "Update and publish blog, docs, wiki [- part ]"
+labels: ["content"]
 assignees: ["christosgalano"]
 body:
   - type: markdown
