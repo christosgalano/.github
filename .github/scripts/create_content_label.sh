@@ -18,6 +18,7 @@ do
     -H "Authorization: Bearer $1"\
     -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/repos/$repo/labels \
-    -d '{"name":"content","description":"Cloud-on-Rails related","color":"0052cc"}'
+    -d '{"name":"content","description":"Cloud-on-Rails related","color":"0052cc"}' \
+    -w 'code: %{response_code}'
     printf "\n\n"
 done
