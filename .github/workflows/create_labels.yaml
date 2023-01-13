@@ -1,4 +1,4 @@
-name: Create labels
+name: create-labels
 run-name: ${{ github.workflow }}
 
 on:
