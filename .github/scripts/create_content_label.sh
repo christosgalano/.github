@@ -8,7 +8,7 @@ repos=$(curl -s \
 https://api.github.com/user/repos | jq -r '.[].full_name')
 
 # Create a content label to every repository
-for repo in $repos;
+for repo in $repos
 do
     printf "Creating content label to $repo ...\n"
     curl -s \
