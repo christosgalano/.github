@@ -7,7 +7,6 @@ repos=$(curl -s \
     -H "X-GitHub-Api-Version: 2022-11-28" \
 https://api.github.com/user/repos | jq -r '.[].full_name')
 
-
 # Create a content label to every repository
 for repo in $repos;
 do
