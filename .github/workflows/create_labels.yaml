@@ -9,23 +9,23 @@ jobs:
     name: Create labels for all repositories
     runs-on: ubuntu-latest
     steps:
-      - name: Get all repositories
+      - name: Get all repositories and clean them
+        id: get-repos
         run: |
           repos=$(curl \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.ISSUE_MANAGER_PAT }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/user/repos)
-
-      - name: Clean the repositories
-        run: |
           repos_cleaned=( $(echo $repos | jq -r '.[].full_name') )
+          echo "REPOSITORIES=$repos_cleaned" >> $GITHUB_OUTPUT
 
       - name: Print the repositories
         run: |
-          echo $repos_cleaned
+          rp=${{ steps.get-repos.outputs.REPOSITORIES }}
+          echo $rp
           printf "\n\n"
-          for r in $repos_cleaned
+          for r in $rp
           do
             echo "Hello: $r"
           done
