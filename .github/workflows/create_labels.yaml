@@ -2,8 +2,8 @@ name: create-labels
 run-name: ${{ github.workflow }}
 
 on:
-  schedule:
-    - "0 9 * * *" # every day at 9 am
+  # schedule:
+  #   - "0 9 * * *" # every day at 9 am
   workflow_dispatch:
 
 jobs:
