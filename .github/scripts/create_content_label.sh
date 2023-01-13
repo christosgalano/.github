@@ -11,7 +11,7 @@ https://api.github.com/user/repos | jq -r '.[].full_name')
 # Create a content label to every repository
 for repo in $repos;
 do
-    echo "Adding content label to $repo ..."
+    echo "Creating content label to $repo ..."
     curl \
     -X POST \
     -H "Accept: application/vnd.github+json" \
