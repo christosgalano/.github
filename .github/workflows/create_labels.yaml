@@ -5,8 +5,7 @@ run-name: ${{ github.workflow }}
 
 on:
   schedule:
-    - cron: "0 15 * * *" # every day at 3 pm
-  workflow_dispatch:
+    - cron: "0 0 * * *" # every day at 12 am
 
 jobs:
   create-labels:
