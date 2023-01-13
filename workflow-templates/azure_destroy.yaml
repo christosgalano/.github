@@ -9,6 +9,7 @@ on:
         type: string
 
 jobs:
+  
   approve:
     name: Approve infrastructure teardown
     permissions:
