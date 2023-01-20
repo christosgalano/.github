@@ -46,8 +46,8 @@ jobs:
         working-directory: ${{ github.workspace }}/.github/scripts
         run: |
           ./label.sh \
-            -n ${{ inputs.name | "content" }} \
-            -c ${{ inputs.color | "252a30" }} \
-            -d ${{ inputs.description | "Blog related" }} \
+            -n ${{ inputs.name || "content" }} \
+            -c ${{ inputs.color || "252a30" }} \
+            -d ${{ inputs.description || "Blog related" }} \
             -a ${{ secrets.ISSUE_MANAGER_PAT }} \
-            -m ${{ inputs.mode | "update" }}
+            -m ${{ inputs.mode || "update" }}
