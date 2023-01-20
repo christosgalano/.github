@@ -1,3 +1,3 @@
 # Base for all other repositories
 
-[![labels](https://github.com/christosgalano/.github/actions/workflows/labels.yaml/badge.svg?branch=main)](https://github.com/christosgalano/.github/actions/workflows/labels.yaml)
+[![create-update-label](https://github.com/christosgalano/.github/actions/workflows/create_update_label.yaml/badge.svg?branch=main)](https://github.com/christosgalano/.github/actions/workflows/create_update_label.yaml)
