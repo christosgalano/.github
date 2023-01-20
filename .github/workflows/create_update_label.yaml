@@ -1,8 +1,6 @@
-# This workflows creates labels specified in scripts to all repositories.
-
-name: labels
+# This workflows updates a label specified (or creates one if it doesn't exist) in all of the user's repositories.
+name: create-update-label
 run-name: ${{ github.workflow }}
-
 on:
   push:
     branches:
@@ -28,7 +26,7 @@ on:
         type: string
 
 jobs:
-  create-update-labels:
+  create-update-label:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

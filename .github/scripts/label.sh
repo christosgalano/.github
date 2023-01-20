@@ -7,10 +7,10 @@ function display_help() {
     echo "Usage: $0 -n name -c color -d description -a api_token"
     echo ""
     echo "Options:"
-    echo " -n, --name          specify label name                            (required)"
-    echo " -c, --color         specify label color                           (required)"
-    echo " -d, --description   specify label description                     (required)"
-    echo " -a, --api-token     specify api token                             (required)"
+    echo " -n, --name          specify label name         (required)"
+    echo " -c, --color         specify label color        (required)"
+    echo " -d, --description   specify label description  (required)"
+    echo " -a, --api-token     specify api token          (required)"
     echo " -h, --help          display this help message and exit"
     echo ""
 }
@@ -87,9 +87,9 @@ function update_label() {
     --output /dev/null)
     if [ "$status_code" -eq 404 ]; then
         create_label
-        printf "Successfully created $name label since in $repo ...\n\n"
+        printf "Successfully created $name label since in $repo\n"
     else
-        printf "Successfully updated $name label in $repo ...\n\n"
+        printf "Successfully updated $name label in $repo\n"
     fi
 }
 
