@@ -127,12 +127,3 @@ do
     fi
     printf "\n"
 done
-
-
-
-./label.sh \
--n content \
--c 252a30 \
--d "Blog related" \
--a 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 \
--m update
