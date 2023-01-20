@@ -4,21 +4,20 @@
 
 # Dispaly help message
 function display_help() {
-    echo "Usage: $0 -n name -c color -d description -a api_token -m mode"
+    echo "Usage: $0 -n name -c color -d description -a api_token"
     echo ""
     echo "Options:"
     echo " -n, --name          specify label name                            (required)"
     echo " -c, --color         specify label color                           (required)"
     echo " -d, --description   specify label description                     (required)"
     echo " -a, --api-token     specify api token                             (required)"
-    echo " -m, --mode          specify the mode value ('create' or 'update') (required)"
     echo " -h, --help          display this help message and exit"
     echo ""
 }
 
 # Parse input
 function parse_params() {
-    TEMP=`getopt -o n:c:d:a:m:h --long name:,color:,description:,api-token:,mode:,help -n 'parse_params' -- "$@"`
+    TEMP=`getopt -o n:c:d:a:h --long name:,color:,description:,api-token:,help -n 'parse_params' -- "$@"`
     eval set -- "$TEMP"
     while true; do
         case "$1" in
@@ -36,10 +35,6 @@ function parse_params() {
             ;;
             -a|--api-token)
                 api_token="$2"
-                shift 2
-            ;;
-            -m|--mode)
-                mode="$2"
                 shift 2
             ;;
             -h|--help)
@@ -62,12 +57,7 @@ function parse_params() {
 # Check if all required options are provided
 function validate_params() {
     if [ -z "$name" ] || [ -z "$color" ] || [ -z "$description" ] || [ -z "$api_token" ]; then
-        echo "Error: All options -n, -c, -d, -a, -m are required"
-        display_help
-        exit 1
-    fi
-    if [[ "$mode" != "create" && "$mode" != "update" ]]; then
-        echo "Error: Invalid mode, options are 'create' or 'update'"
+        echo "Error: All options -n, -c, -d, -a are required"
         display_help
         exit 1
     fi
@@ -96,8 +86,10 @@ function update_label() {
         --write-out '%{http_code}' \
     --output /dev/null)
     if [ "$status_code" -eq 404 ]; then
-        printf "Creating $name label since it was not found in $repo ...\n"
         create_label
+        printf "Successfully created $name label since in $repo ...\n\n"
+    else
+        printf "Successfully updated $name label in $repo ...\n\n"
     fi
 }
 
@@ -115,15 +107,9 @@ repos=$(curl -s \
 https://api.github.com/user/repos | jq -r '.[].full_name')
 
 
-# # Create create a label to every repository
+# Update the specified label in every repository.
+# If it does not exist then create it.
 for repo in $repos;
 do
-    if [[ "$mode" == "create" ]]; then
-        printf "Creating $name label to $repo ...\n"
-        create_label
-    else
-        printf "Updating $name label to $repo ...\n"
-        update_label
-    fi
-    printf "\n"
+    update_label
 done

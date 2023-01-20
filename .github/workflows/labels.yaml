@@ -26,13 +26,6 @@ on:
         default: "Blog-related"
         required: true
         type: string
-      mode:
-        description: "Specify mode"
-        required: true
-        type: choice
-        options:
-          - "create"
-          - "update"
 
 jobs:
   create-update-labels:
@@ -52,5 +45,4 @@ jobs:
             -n ${{ inputs.name || 'content' }} \
             -c ${{ inputs.color || '252a30' }} \
             -d ${{ inputs.description || 'Blog-related' }} \
-            -a ${{ secrets.ISSUE_MANAGER_PAT }} \
-            -m ${{ inputs.mode || 'update' }}
+            -a ${{ secrets.ISSUE_MANAGER_PAT }}
