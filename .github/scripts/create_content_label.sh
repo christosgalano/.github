@@ -17,6 +17,6 @@ do
     -H "Authorization: Bearer $1" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
     https://api.github.com/repos/$repo/labels \
-    -d '{"name":"content","description":"Blog related","color":"0052cc"}'
+    -d '{"name":"content","description":"Blog related","color":"252a30"}'
     printf "\n\n"
 done
