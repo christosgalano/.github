@@ -32,15 +32,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Give execute permissions
-        working-directory: ${{ github.workspace }}/.github/scripts
-        run: chmod +x label.sh
+      # - name: Give execute permissions
+      #   working-directory: ${{ github.workspace }}/.github/scripts
+      #   run: chmod +x label.sh
 
-      - name: Execute label script
-        working-directory: ${{ github.workspace }}/.github/scripts
-        run: |
-          ./label.sh \
-            -n ${{ inputs.name || 'content' }} \
-            -c ${{ inputs.color || '252a30' }} \
-            -d ${{ inputs.description || 'Blog-related' }} \
-            -a ${{ secrets.ISSUE_MANAGER_PAT }}
+      # - name: Execute label script
+      #   working-directory: ${{ github.workspace }}/.github/scripts
+      #   run: |
+      #     ./label.sh \
+      #       -n ${{ inputs.name || 'content' }} \
+      #       -c ${{ inputs.color || '252a30' }} \
+      #       -d ${{ inputs.description || 'Blog-related' }} \
+      #       -a ${{ secrets.ISSUE_MANAGER_PAT }}
+      - uses: christosgalano/.github/.github/actions/create-update-label@main
+        with:
+          name: ${{ inputs.name || 'content' }}
+          color: ${{ inputs.color || '252a30' }}
+          description: ${{ inputs.description || 'Blog-related' }}
+          token: ${{ secrets.ISSUE_MANAGER_PAT }}
