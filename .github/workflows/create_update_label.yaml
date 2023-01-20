@@ -29,10 +29,7 @@ jobs:
   create-update-label:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - uses: christosgalano/.github/.github/actions/create-update-label@main
+      - uses: christosgalano/Workflows-Actions-Library/.github/actions/create-update-label@main
         with:
           name: ${{ inputs.name || 'content' }}
           color: ${{ inputs.color || '252a30' }}
