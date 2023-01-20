@@ -10,7 +10,6 @@ on:
 
 jobs:
   create-labels:
-    name: Create labels for all repositories
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
