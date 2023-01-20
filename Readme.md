@@ -1,1 +1,1 @@
-# Default files for my repositories
+# Base for all other repositories
