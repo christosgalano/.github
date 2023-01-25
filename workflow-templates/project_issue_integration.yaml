@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/add-to-project@v0.4.0
         with:
-          project-url: https://github.com/orgs/christosgalano/projects/<project_number>
+          project-url: https://github.com/users/christosgalano/projects/<project_number>
           github-token: ${{ secrets.PROJECT_PAT }}
           labeled: <label_name>
