@@ -11,5 +11,5 @@ jobs:
       - uses: christosgalano/Workflows-Actions-Library/.github/actions/delete-workflow-runs@main
         with:
           owner: ${{ github.repository_owner }}
-          repo: .github
+          repo: <repo_name>
           token: ${{ secrets.WORKFLOWS_MANAGER_PAT }}

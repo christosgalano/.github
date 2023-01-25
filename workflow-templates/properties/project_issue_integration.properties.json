@@ -1,6 +1,6 @@
 {
     "name": "Project Issue Integration",
-    "description": "Add a newly opened to a specific project.",
+    "description": "Add a newly opened issue to a specific project.",
     "iconName": "octicon project-symlink",
     "categories": [
         "Automation"
