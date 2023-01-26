@@ -3,6 +3,12 @@ name: delete-workflow-runs
 run-name: ${{ github.workflow }}
 on:
   workflow_dispatch:
+    inputs:
+      repo_name:
+        description: "Specify the name of the repository"
+        default: .github
+        required: true
+        type: string
 
 jobs:
   delete-workflow-runs:
@@ -11,5 +17,5 @@ jobs:
       - uses: christosgalano/Workflows-Actions-Library/.github/actions/delete-workflow-runs@main
         with:
           owner: ${{ github.repository_owner }}
-          repo: .github
+          repo: ${{ inputs.repo_name }}
           token: ${{ secrets.WORKFLOWS_MANAGER_PAT }}
