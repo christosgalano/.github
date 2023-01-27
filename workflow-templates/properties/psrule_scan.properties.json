@@ -4,5 +4,8 @@
     "iconName": "octicon codescan",
     "categories": [
         "Bicep"
+    ],
+    "filePatterns": [
+        "^ps-rule"
     ]
 }
