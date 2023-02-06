@@ -14,11 +14,13 @@ body:
         - Update the blog's repository:
           - update the links to other posts: `{% post_url 20yy-mm-dd-post-title %}`
           - move the post from the *_drafts* folder to the *_posts* folder
+
         - Update the project's repository:
           - add link to reference the blog's post
           - update the links to other posts
           - move the post from the *docs/dev* folder to the *docs* folder
           - change visibility to *Public*
+
         - Share the new post in LinkedIn
 
   - type: checkboxes
