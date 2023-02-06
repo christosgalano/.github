@@ -7,10 +7,12 @@ body:
   - type: markdown
     attributes:
       value: |
-        **Steps after opening:**
+        ## Steps after opening:
+
         - Modify the roadmap in Christos's Blog Project
 
-        **Requirements before closing:**
+        ## Requirements before closing:
+
         - Update the blog's repository:
           - update the links to other posts: `{% post_url 20yy-mm-dd-post-title %}`
           - move the post from the `_drafts` folder to the `_posts` folder
