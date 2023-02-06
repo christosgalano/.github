@@ -1,13 +1,13 @@
 name: Content
 description: Reminder to take care of cloud-on-rails content
-title: "Update and publish blog, docs, wiki [- part ]"
+title: "<Project> [- part ]"
 labels: ["content"]
 assignees: ["christosgalano"]
 body:
   - type: markdown
     attributes:
       value: |
-        After creating this issue, make sure to add it in the Cloud-on-Rails Project.
+        After creating this issue, make sure to modify the roadmap in Christos's Blog Project.
 
   - type: checkboxes
     id: terms
