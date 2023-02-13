@@ -26,7 +26,7 @@ jobs:
         shell: bash
     steps:
       - name: Dump github context
-        run: echo "$GITHUB_CONTEXT" >> $GITHUB_STEP_SUMMARY
+        run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
 
@@ -38,7 +38,7 @@ jobs:
         shell: bash
     steps:
       - name: Dump github context
-        run: echo "$GITHUB_CONTEXT" >> $GITHUB_STEP_SUMMARY
+        run: echo "$GITHUB_CONTEXT"
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
 
