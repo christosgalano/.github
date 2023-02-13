@@ -1,5 +1,5 @@
-# This workflows gets the latest run status of a specified workflow.
-name: workflow-run-status
+# This workflows gets the latest run conclusion of a specified workflow.
+name: workflow-run-conclusion
 run-name: ${{ github.workflow }}
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  workflow-run-status:
+  workflow-run-conclusion:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,8 +21,8 @@ jobs:
           repo_name="$(cut -d '/' -f 2 <<< "${{ github.repository }}" )";
           echo "repo-name=$repo_name" >> $GITHUB_OUTPUT
 
-      - name: Get create-update-label latest run status
-        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+      - name: Get create-update-label latest run conclusion
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-conclusion@main
         id: get-create-update-label
         with:
           workflow: create-update-label
@@ -30,11 +30,11 @@ jobs:
           repository: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print create-update-label latest run status
-        run: echo ${{ steps.get-create-update-label.outputs.workflow-run-status }}
+      - name: Print create-update-label latest run conclusion
+        run: echo ${{ steps.get-create-update-label.outputs.workflow-run-conclusion }}
 
-      - name: Get delete-workflow-runs latest run status
-        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+      - name: Get delete-workflow-runs latest run conclusion
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-conclusion@main
         id: get-delete-workflow-runs
         with:
           workflow: delete-workflow-runs
@@ -42,5 +42,5 @@ jobs:
           repository: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print delete-workflow-runs latest run status
-        run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-status }}
+      - name: Print delete-workflow-runs latest run conclusion
+        run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-conclusion }}
