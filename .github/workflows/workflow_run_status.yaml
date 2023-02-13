@@ -52,13 +52,19 @@ jobs:
       run:
         shell: bash
     steps:
+      - name: Get repository's name
+        id: get-repo-name
+        run: |
+          repo_name="$(cut -d '/' -f 2 <<< "${{ github.repository }}" )";
+          echo "repo-name=$repo_name" >> $GITHUB_OUTPUT
+
       - name: Get create-update-label latest run status
         uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
         id: get-create-update-label
         with:
           workflow: create-update-label
           owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
+          repo: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print create-update-label latest run status
@@ -70,7 +76,7 @@ jobs:
         with:
           workflow: delete-workflow-runs
           owner: ${{ inputs.repository_owner }}
-          repo: ${{ github.event.repository.name }}
+          repo: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print delete-workflow-runs latest run status
