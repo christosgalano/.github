@@ -1,6 +1,6 @@
 # This workflows gets the latest run conclusion of a specified workflow.
-name: workflow-run-conclusion
-run-name: ${{ github.workflow }}
+name: workflow-conclusion
+name: ${{ github.workflow }}
 on:
   workflow_dispatch:
 
@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 jobs:
-  workflow-run-conclusion:
+  workflow-conclusion:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,7 +22,7 @@ jobs:
           echo "repo-name=$repo_name" >> $GITHUB_OUTPUT
 
       - name: Get create-update-label latest run conclusion
-        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-conclusion@main
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-conclusion@main
         id: get-create-update-label
         with:
           workflow: create-update-label
@@ -31,10 +31,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print create-update-label latest run conclusion
-        run: echo ${{ steps.get-create-update-label.outputs.workflow-run-conclusion }}
+        run: echo ${{ steps.get-create-update-label.outputs.workflow-conclusion }}
 
       - name: Get delete-workflow-runs latest run conclusion
-        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-conclusion@main
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-conclusion@main
         id: get-delete-workflow-runs
         with:
           workflow: delete-workflow-runs
@@ -43,4 +43,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print delete-workflow-runs latest run conclusion
-        run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-conclusion }}
+        run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-conclusion }}
