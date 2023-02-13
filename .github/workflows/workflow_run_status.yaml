@@ -27,7 +27,7 @@ jobs:
         with:
           workflow: create-update-label
           owner: ${{ github.repository_owner }}
-          repo: ${{ steps.get-repo-name.outputs.repo-name }}
+          repository: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print create-update-label latest run status
@@ -39,7 +39,7 @@ jobs:
         with:
           workflow: delete-workflow-runs
           owner: ${{ inputs.repository_owner }}
-          repo: ${{ steps.get-repo-name.outputs.repo-name }}
+          repository: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Print delete-workflow-runs latest run status
