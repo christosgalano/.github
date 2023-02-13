@@ -16,30 +16,30 @@ jobs:
         shell: bash
     steps:
       - name: Dump github context
-        run: echo "$GITHUB_CONTEXT"
+        run: echo "$GITHUB_CONTEXT" >> $GITHUB_STEP_SUMMARY
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
 
-      - name: Get create-update-label latest run status
-        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
-        id: get-create-update-label
-        with:
-          workflow: create-update-label
-          owner: ${{ github.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Get create-update-label latest run status
+      #   uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+      #   id: get-create-update-label
+      #   with:
+      #     workflow: create-update-label
+      #     owner: ${{ github.repository_owner }}
+      #     repo: ${{ github.event.repository.name }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print create-update-label latest run status
-        run: echo ${{ steps.get-create-update-label.outputs.workflow-run-status }}
+      # - name: Print create-update-label latest run status
+      #   run: echo ${{ steps.get-create-update-label.outputs.workflow-run-status }}
 
-      - name: Get delete-workflow-runs latest run status
-        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
-        id: get-delete-workflow-runs
-        with:
-          workflow: delete-workflow-runs
-          owner: ${{ inputs.repository_owner }}
-          repo: ${{ github.event.repository.name }}
-          token: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Get delete-workflow-runs latest run status
+      #   uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+      #   id: get-delete-workflow-runs
+      #   with:
+      #     workflow: delete-workflow-runs
+      #     owner: ${{ inputs.repository_owner }}
+      #     repo: ${{ github.event.repository.name }}
+      #     token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Print delete-workflow-runs latest run status
-        run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-status }}
+      # - name: Print delete-workflow-runs latest run status
+      #   run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-status }}
