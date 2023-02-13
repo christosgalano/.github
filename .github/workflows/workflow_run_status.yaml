@@ -26,7 +26,7 @@ jobs:
         shell: bash
     steps:
       - run: |
-          repo_name="$(cut -d '/' -f 1 <<< "${{ github.repository }}" )";
+          repo_name="$(cut -d '/' -f 2 <<< "${{ github.repository }}" )";
           echo "$repo_name"
 
   context-2:
@@ -37,7 +37,7 @@ jobs:
         shell: bash
     steps:
       - run: |
-          repo_name="$(cut -d '/' -f 1 <<< "${{ github.repository }}" )";
+          repo_name="$(cut -d '/' -f 2 <<< "${{ github.repository }}" )";
           echo "$repo_name"
 
   workflow-run-status:
