@@ -38,7 +38,7 @@ jobs:
         id: get-delete-workflow-runs
         with:
           workflow: delete-workflow-runs
-          owner: ${{ inputs.repository_owner }}
+          owner: ${{ github.repository_owner }}
           repository: ${{ steps.get-repo-name.outputs.repo-name }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
