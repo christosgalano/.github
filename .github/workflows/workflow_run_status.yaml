@@ -1,0 +1,43 @@
+# This workflows gets the latest run status of a specified workflow.
+name: workflow-run-status
+run-name: ${{ github.workflow }}
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  workflow-run-status:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Get create-update-label latest run status
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+        id: get-create-update-label
+        with:
+          workflow: create-update-label
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo ${{ steps.get-create-update-label.outputs.workflow-run-status }}
+
+      - name: Get delete-workflow-runs latest run status
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+        id: get-delete-workflow-runs
+        with:
+          workflow: delete-workflow-runs
+          owner: ${{ inputs.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-status }}
+
+      - name: Dump github context
+        run: echo "$GITHUB_CONTEXT"
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
