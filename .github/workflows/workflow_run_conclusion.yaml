@@ -1,6 +1,6 @@
 # This workflows gets the latest run conclusion of a specified workflow.
 name: workflow-conclusion
-name: ${{ github.workflow }}
+run-name: ${{ github.workflow }}
 on:
   workflow_dispatch:
 
