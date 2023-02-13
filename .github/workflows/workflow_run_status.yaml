@@ -25,10 +25,9 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Dump github context
-        run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
+      - run: |
+          repo_name="$(cut -d '/' -f 1 <<< "${{ github.repository }}" )";
+          echo "$repo_name"
 
   context-2:
     runs-on: ubuntu-latest
@@ -37,10 +36,9 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Dump github context
-        run: echo "$GITHUB_CONTEXT"
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
+      - run: |
+          repo_name="$(cut -d '/' -f 1 <<< "${{ github.repository }}" )";
+          echo "$repo_name"
 
   workflow-run-status:
     needs: [context-1, context-2]
