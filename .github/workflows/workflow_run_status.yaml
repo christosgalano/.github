@@ -3,13 +3,23 @@ name: workflow-run-status
 run-name: ${{ github.workflow }}
 on:
   workflow_dispatch:
+    inputs:
+      context:
+        type: choice
+        required: true
+        description: "Choose context"
+        options:
+          - "one"
+          - "two"
+          - "both"
 
 permissions:
   actions: read
   contents: read
 
 jobs:
-  workflow-run-status:
+  context-1:
+    if: inputs.context == 'one' || inputs.context == 'both'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -20,26 +30,45 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
 
-      # - name: Get create-update-label latest run status
-      #   uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
-      #   id: get-create-update-label
-      #   with:
-      #     workflow: create-update-label
-      #     owner: ${{ github.repository_owner }}
-      #     repo: ${{ github.event.repository.name }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+  context-2:
+    runs-on: ubuntu-latest
+    if: inputs.context == 'two' || inputs.context == 'both'
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Dump github context
+        run: echo "$GITHUB_CONTEXT" >> $GITHUB_STEP_SUMMARY
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
 
-      # - name: Print create-update-label latest run status
-      #   run: echo ${{ steps.get-create-update-label.outputs.workflow-run-status }}
+  workflow-run-status:
+    needs: [context-1, context2]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Get create-update-label latest run status
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+        id: get-create-update-label
+        with:
+          workflow: create-update-label
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      # - name: Get delete-workflow-runs latest run status
-      #   uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
-      #   id: get-delete-workflow-runs
-      #   with:
-      #     workflow: delete-workflow-runs
-      #     owner: ${{ inputs.repository_owner }}
-      #     repo: ${{ github.event.repository.name }}
-      #     token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Print create-update-label latest run status
+        run: echo ${{ steps.get-create-update-label.outputs.workflow-run-status }}
 
-      # - name: Print delete-workflow-runs latest run status
-      #   run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-status }}
+      - name: Get delete-workflow-runs latest run status
+        uses: christosgalano/Workflows-Actions-Library/.github/actions/workflow-run-status@main
+        id: get-delete-workflow-runs
+        with:
+          workflow: delete-workflow-runs
+          owner: ${{ inputs.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Print delete-workflow-runs latest run status
+        run: echo ${{ steps.get-delete-workflow-runs.outputs.workflow-run-status }}
