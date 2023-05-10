@@ -14,7 +14,7 @@ jobs:
   delete-workflow-runs:
     runs-on: ubuntu-latest
     steps:
-      - uses: christosgalano/Workflows-Actions-Library/.github/actions/delete-workflow-runs@main
+      - uses: christosgalano/delete-workflows-runs@v1.0.0
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ inputs.repo_name }}
