@@ -1,6 +1,8 @@
 {
-    "name": "Destroy an Azure infrastructure",
+    "name": "Destroy Bicep deployment",
     "description": "Destroy a deployment's resource group/s and all of their resources.",
     "iconName": "azure",
-    "categories": []
+    "categories": [
+        "Automation"
+    ]
 }

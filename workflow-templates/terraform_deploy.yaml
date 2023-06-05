@@ -1,0 +1,122 @@
+name: deploy
+run-name: ${{ github.workflow }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+        description: "Specify the environment to deploy into"
+
+env:
+  TERRAFORM_DIR: terraform
+  TERRAFORM_ENV_DIR: terraform/environments/${{ inputs.environment }}
+
+jobs:
+  deploy-infrastructure:
+    name: deploy-infrastructure
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    defaults:
+      run:
+        shell: bash
+        working-directory: ${{ env.TERRAFORM_DIR }}/environments/${{ inputs.environment }}
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Run checkov
+        uses: bridgecrewio/checkov-action@v12
+        id: checkov
+        with:
+          config_file: ${{ github.workspace}}/.checkov.yaml
+          directory: ${{ env.TERRAFORM_ENV_DIR }}
+          var_file: ${{ env.TERRAFORM_ENV_DIR }}/${{ inputs.environment }}.tfvars
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        continue-on-error: true
+
+      - name: Terraform init
+        id: init
+        run: terraform init
+        continue-on-error: true
+
+      - name: Terraform validate
+        id: validate
+        run: terraform validate -no-color
+        continue-on-error: true
+
+      - name: Terraform plan
+        id: plan
+        run: |
+          terraform plan \
+            -no-color -input=false \
+            -var-file=${{ inputs.environment }}.tfvars \
+            -var="client_id=${{ secrets.CLIENT_ID }}" \
+            -var="client_secret=${{ secrets.CLIENT_SECRET }}" \
+            -var="tenant_id=${{ secrets.TENANT_ID }}" \
+            -var="subscription_id=${{ secrets.SUBSCRIPTION_ID }}" \
+            -var="windows_admin_password=${{ secrets.WINDOWS_ADMIN_PASSWORD }}" \
+            -var="linux_admin_public_ssh_key=${{ secrets.LINUX_ADMIN_PUBLIC_SSH_KEY }}" \
+            -out=${{ inputs.environment }}.tfplan
+        continue-on-error: true
+
+      - name: Terraform actions summary 1
+        if: |
+          steps.checkov.outcome == 'failure' || steps.fmt.outcome == 'failure' ||
+          steps.init.outcome == 'failure' || steps.validate.outcome == 'failure' ||
+          steps.plan.outcome == 'failure'
+        run: |
+          summary="## Terraform actions summary for ${{ inputs.environment }}\n
+          #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`\n
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`\n
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`\n
+          <details><summary>Validation Output</summary>\n
+          \`\`\`hcl\n${{ steps.validate.outputs.stdout }}\`\`\`\n
+          </details>\n
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`\n
+          <details><summary>Plan Output</summary>\n
+          \`\`\`hcl\n${{ steps.plan.outputs.stdout }}\`\`\`\n
+          </details>\n"
+          printf "$summary" >> $GITHUB_STEP_SUMMARY
+
+      - name: Failed terraform status
+        if: |
+          steps.checkov.outcome == 'failure' || steps.fmt.outcome == 'failure' ||
+          steps.init.outcome == 'failure' || steps.validate.outcome == 'failure' ||
+          steps.plan.outcome == 'failure'
+        run: exit 1
+
+      - name: Terraform apply
+        id: apply
+        run: terraform apply ${{ inputs.environment }}.tfplan -no-color
+        continue-on-error: true
+
+      - name: Terraform actions summary 2
+        run: |
+          summary="## Terraform actions summary for ${{ inputs.environment }}\n
+          #### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`\n
+          #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`\n
+          #### Terraform Validation 🤖\`${{ steps.validate.outcome }}\`\n
+          <details><summary>Validation Output</summary>\n
+          \`\`\`hcl\n${{ steps.validate.outputs.stdout }}\`\`\`\n
+          </details>\n
+          #### Terraform Plan 📖\`${{ steps.plan.outcome }}\`\n
+          <details><summary>Plan Output</summary>\n
+          \`\`\`hcl\n${{ steps.plan.outputs.stdout }}\`\`\`\n
+          </details>\n
+          #### Terraform Apply 🎯\`${{ steps.apply.outcome }}\`\n
+          <details><summary>Apply Output</summary>\n
+          \`\`\`hcl\n${{ steps.apply.outputs.stdout }}\`\`\`\n
+          </details>\n"
+          printf "$summary" >> $GITHUB_STEP_SUMMARY
+
+      - name: Failed terraform apply status
+        if: steps.apply.outcome == 'failure'
+        run: exit 1

@@ -1,0 +1,31 @@
+# This workflow generates Terraform documentation for the modules included in the repository.
+name: generate-terraform-docs
+run-name: ${{ github.workflow }}
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+
+env:
+  TERRAFORM_DIR: ${{ github.workspace }}/terraform
+
+jobs:
+  generate-terraform-docs:
+    name: generate-terraform-docs
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Generate Terraform documentation
+        uses: terraform-docs/gh-actions@v1.0.0
+        with:
+          find-dir: ${{ env.TERRAFORM_DIR }}/
+          config-file: .terraform-docs.yaml
+          output-method: replace
+          git-push: "true"

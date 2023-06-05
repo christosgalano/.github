@@ -2,6 +2,10 @@ name: stale-repo-identifier
 run-name: ${{ github.workflow}}
 on:
   workflow_dispatch:
+    inputs:
+      organization:
+        description: 'The organization to check for stale repositories'
+        required: true
   schedule:
     - cron: '0 9 1 * *'
 
@@ -20,7 +24,7 @@ jobs:
       uses: docker://ghcr.io/github/stale_repos:v1
       env:
         GH_TOKEN: ${{ secrets.STALE_REPOS_PAT }}
-        ORGANIZATION: ${{ github.repository_owner }}
+        ORGANIZATION: ${{ inputs.organization || github.repository_owner }}
         INACTIVE_DAYS: 365
 
     - name: Create issue

@@ -1,0 +1,9 @@
+{
+    "name": "Stale repo identifier",
+    "description": "Scan for stale repositories in an organization.",
+    "iconName": "octicon pulse",
+    "categories": [
+        "utilities",
+        "Automation"
+    ]
+}

@@ -1,8 +1,0 @@
-{
-    "name": "Bicep Checkov scan",
-    "description": "Scan a bicep template using Checkov and publish the results.",
-    "iconName": "octicon codescan",
-    "categories": [
-        "Bicep"
-    ]
-}

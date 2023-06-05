@@ -1,0 +1,10 @@
+{
+    "name": "Generate Terraform documentation",
+    "description": "For each module generate the corresponding README.",
+    "iconName": "octicon file",
+    "categories": [
+        "utilities",
+        "Automation",
+        "terraform"
+    ]
+}
