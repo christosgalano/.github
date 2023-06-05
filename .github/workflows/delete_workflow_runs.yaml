@@ -23,7 +23,7 @@ jobs:
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ inputs.repo_name }}
-          token: ${{ secrets.WORKFLOWS_MANAGER_PAT }}
+          token: ${{ secrets.WORKFLOWS_PAT }}
           workflow: ${{ inputs.workflow_name }}
   
   delete-all-workflow-runs:
@@ -34,4 +34,4 @@ jobs:
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ inputs.repo_name }}
-          token: ${{ secrets.WORKFLOWS_MANAGER_PAT }}
+          token: ${{ secrets.WORKFLOWS_PAT }}
