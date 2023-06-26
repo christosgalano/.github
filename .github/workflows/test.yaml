@@ -14,4 +14,4 @@ jobs:
         uses: ./
         with:
           who-to-greet: 'Mona the Octocat'
-          which-dir-to-ls: ${{ github.workspace }}/workflow-templates
+          which-dir-to-ls: workflow-templates
