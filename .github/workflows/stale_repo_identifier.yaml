@@ -6,6 +6,7 @@ on:
       organization:
         description: 'The organization to check for stale repositories'
         required: true
+        default: 'christosgalano'
   schedule:
     - cron: '0 9 1 * *'
 
