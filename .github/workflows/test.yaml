@@ -13,4 +13,5 @@ jobs:
       - name: Run tests
         uses: ./
         with:
-          which-dir-to-ls: workflow-templates
+          path: workflow-templates
+          mode: update
