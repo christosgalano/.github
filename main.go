@@ -10,6 +10,7 @@ import (
 )
 
 func main() {
+	mode := flag.String("mode", "", "Mode to run in")
 	path := flag.String("path", "", "Path to list")
 
 	flag.Parse()
@@ -18,9 +19,22 @@ func main() {
 		panic("Path is required")
 	}
 
+	if *mode == "" {
+		panic("Mode is required")
+	}
+
 	f, err := os.Stat(*path)
 	if err != nil {
 		panic(err)
+	}
+
+	switch *mode {
+	case "scan":
+		fmt.Println("Scanning...")
+	case "update":
+		fmt.Println("Updating...")
+	default:
+		panic("Invalid mode")
 	}
 
 	if f.IsDir() {
