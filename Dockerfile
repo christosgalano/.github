@@ -1,5 +1,5 @@
 # Container image that runs your code
-FROM golang:1.20.0-alpine3.14
+FROM golang:1.20-alpine3.18
 
 RUN mkdir /app
 
