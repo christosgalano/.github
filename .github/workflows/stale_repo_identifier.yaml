@@ -1,31 +1,21 @@
-name: stale-repo-identifier
-run-name: ${{ github.workflow}}
+name: stale repo identifier
+
 on:
   workflow_dispatch:
-    inputs:
-      organization:
-        description: 'The organization to check for stale repositories'
-        required: true
-        default: 'christosgalano'
   schedule:
-    - cron: '0 9 1 * *'
+    - cron: '3 2 1 * *'
 
 jobs:
-  run:
-    name: stale-repo-identifier
+  build:
+    name: stale repo identifier
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
 
+    steps:
     - name: Run stale_repos tool
       uses: github/stale-repos@v1
       env:
         GH_TOKEN: ${{ secrets.STALE_REPOS_PAT }}
-        ORGANIZATION: ${{ inputs.organization || github.repository_owner }}
+        ORGANIZATION: christosgalano
         EXEMPT_TOPICS: "keep,template"
         INACTIVE_DAYS: 365
 
@@ -34,5 +24,5 @@ jobs:
       with:
         title: Stale repository report
         content-filepath: ./stale_repos.md
-        assignees: ${{ github.repository_owner }}
+        assignees: christosgalano
         token: ${{ secrets.GITHUB_TOKEN }}
