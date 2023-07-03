@@ -22,10 +22,11 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Run stale_repos tool
-      uses: docker://ghcr.io/github/stale_repos:v1
+      uses: github/stale-repos@v1
       env:
         GH_TOKEN: ${{ secrets.STALE_REPOS_PAT }}
         ORGANIZATION: ${{ inputs.organization || github.repository_owner }}
+        EXEMPT_TOPICS: "keep,template"
         INACTIVE_DAYS: 365
 
     - name: Create issue
@@ -34,3 +35,4 @@ jobs:
         title: Stale repository report
         content-filepath: ./stale_repos.md
         assignees: ${{ github.repository_owner }}
+        token: ${{ secrets.GITHUB_TOKEN }}
