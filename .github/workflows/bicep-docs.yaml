@@ -12,8 +12,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - run: ls -la
-      
       - name: Generate documentation for Bicep modules
         uses: christosgalano/bicep-docs@main
         with:
