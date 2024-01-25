@@ -15,21 +15,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
-      - name: Download and extract bicep-docs
+
+      - name: Download Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
         run: |
-          if [[ "${{ runner.os }}" == "Windows" ]]; then
-            wget https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_windows_amd64.zip -O bicep-docs.zip
-            unzip bicep-docs.zip
-          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            Invoke-WebRequest -Uri https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_windows_amd64.zip -OutFile bicep-docs.zip
+            Expand-Archive -Path bicep-docs.zip -DestinationPath .
+      
+      - name: Download Linux/MacOS
+        run: |
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
             wget https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_darwin_amd64.tar.gz -O bicep-docs.tar.gz
-            tar xzf bicep-docs.tar.gz
-            chmod +x bicep-docs
           else
             wget https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_linux_amd64.tar.gz -O bicep-docs.tar.gz
-            tar xzf bicep-docs.tar.gz
-            chmod +x bicep-docs
           fi
+          tar xzf bicep-docs.tar.gz
+          chmod +x bicep-docs
       
       - name: Generate docs
         run: |
