@@ -16,19 +16,27 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Setup Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: '1.21'
-
-      - name: Install bicep-docs
-        run: go install github.com/christosgalano/bicep-docs/cmd/bicep-docs@latest
+      - name: Download and extract bicep-docs
+        run: |
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            wget https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_windows_amd64.zip -O bicep-docs.zip
+            unzip bicep-docs.zip
+          elif [[ "${{ runner.os }}" == "macOS" ]]; then
+            wget https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_darwin_amd64.tar.gz -O bicep-docs.tar.gz
+            tar xzf bicep-docs.tar.gz
+            chmod +x bicep-docs
+          else
+            wget https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_linux_amd64.tar.gz -O bicep-docs.tar.gz
+            tar xzf bicep-docs.tar.gz
+            chmod +x bicep-docs
+          fi
       
       - name: Generate docs
         working-directory: ./bicep/modules/identity
         run: |
-          bicep-docs --input main.bicep --output readme.md --verbose
-          cat readme.md
-          cat README.md
-          diff readme.md README.md
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            bicep-docs.exe --input bicep --verbose
+          else
+            bicep-docs --input bicep --verbose
+          fi
 
