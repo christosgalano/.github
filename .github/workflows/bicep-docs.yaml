@@ -36,8 +36,9 @@ jobs:
       
       - name: Generate docs
         run: |
+          ls -la
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            .\bicep-docs.exe --input bicep --verbose
+            ./bicep-docs.exe --input bicep --verbose
           else
             ./bicep-docs --input bicep --verbose
           fi
