@@ -1,0 +1,38 @@
+name: Bicep Docs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  bicep-docs:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate documentation for Bicep modules
+        uses: christosgalano/bicep-docs@v1.0.0
+        with:
+          input: ./bicep # path relative to workspace
+          verbose: true
+
+      - name: Commit changes - if any
+        id: check-changes
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git diff --quiet --exit-code -- ./bicep || UPDATED=true
+          if [[ "$UPDATED" == "true" ]]; then
+            git add ./bicep
+            git commit -m "Updated documentation for Bicep modules"
+            echo "changed=true" >> $GITHUB_ENV
+          fi
+
+      - name: Push changes - if needed
+        if: steps.check-changes.outputs.changed == 'true'
+        uses: ad-m/github-push-action@master
+        with:
+          branch: ${{ github.ref }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}

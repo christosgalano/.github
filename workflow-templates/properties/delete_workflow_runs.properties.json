@@ -1,9 +1,0 @@
-{
-    "name": "Delete workflow runs",
-    "description": "Delete the runs of the workflows in a repository.",
-    "iconName": "octicon workflow",
-    "categories": [
-        "Automation",
-        "utilities"
-    ]
-}

@@ -1,5 +1,5 @@
 # This workflows deletes the runs of all the workflows in a repository.
-name: delete-workflow-runs
+name: Delete workflow runs
 run-name: ${{ github.workflow }}
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ inputs.repo_name }}
-          token: ${{ secrets.WORKFLOWS_PAT }}
+          token: ${{ secrets.WORKFLOWS_TOKEN }}
           workflow: ${{ inputs.workflow_name }}
   
   delete-all-workflow-runs:
@@ -34,4 +34,4 @@ jobs:
         with:
           owner: ${{ github.repository_owner }}
           repo: ${{ inputs.repo_name }}
-          token: ${{ secrets.WORKFLOWS_PAT }}
+          token: ${{ secrets.WORKFLOWS_TOKEN }}

@@ -1,9 +1,0 @@
-{
-    "name": "Deploy Bicep",
-    "description": "Deploy a bicep template.",
-    "iconName": "octicon rocket",
-    "categories": [
-        "deployment",
-        "Bicep"
-    ]
-}

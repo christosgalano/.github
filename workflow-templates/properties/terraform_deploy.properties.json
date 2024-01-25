@@ -1,9 +1,0 @@
-{
-    "name": "Deploy Terraform",
-    "description": "Deploy a terraform module.",
-    "iconName": "octicon rocket",
-    "categories": [
-        "deployment",
-        "Terraform"
-    ]
-}
