@@ -24,6 +24,8 @@ jobs:
       - name: Generate docs
         working-directory: ./bicep/modules/identity
         run: |
-          bicep-docs --input main.bicep --verbose
+          bicep-docs --input main.bicep -output readme.md --verbose
+          cat readme.md
           cat README.md
+          diff -u readme.md README.md
 
