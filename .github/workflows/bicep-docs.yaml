@@ -21,7 +21,7 @@ jobs:
         shell: pwsh
         run: |
             Invoke-WebRequest -Uri https://github.com/christosgalano/bicep-docs/releases/download/v1.0.0/bicep-docs_windows_amd64.zip -OutFile bicep-docs.zip
-            Expand-Archive -Path bicep-docs.zip -DestinationPath .
+            Expand-Archive -Path bicep-docs.zip -DestinationPath . -Force
       
       - name: Download Linux/MacOS
         run: |
