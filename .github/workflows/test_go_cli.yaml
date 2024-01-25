@@ -1,4 +1,4 @@
-name: Test Go CLi
+name: test-go-cli
 
 on:
   workflow_dispatch:
