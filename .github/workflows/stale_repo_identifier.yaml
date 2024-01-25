@@ -6,10 +6,11 @@ on:
     - cron: '0 9 1 * *'
 
 jobs:
-  build:
-    name: stale repo identifier
+  identify:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      issues: write
     steps:
     - uses: actions/checkout@v3
 
