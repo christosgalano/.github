@@ -38,7 +38,7 @@ jobs:
       - name: Test CLI
         run: |
           if [[ "${{ runner.os }}" == "Windows" ]]; then
-            .\${{ inputs.repo }}.exe --help
+            ./${{ inputs.repo }}.exe --help
           else
             ./${{ inputs.repo }} --help
           fi
