@@ -9,6 +9,9 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,5 +30,5 @@ jobs:
           bicep-docs --input main.bicep --output readme.md --verbose
           cat readme.md
           cat README.md
-          diff -u readme.md README.md
+          diff readme.md README.md
 
