@@ -1,5 +1,5 @@
 # This workflows deletes the runs of all the workflows in a repository.
-name: Delete workflow runs
+name: delete-workflow-runs
 run-name: ${{ github.workflow }}
 on:
   workflow_dispatch:
