@@ -25,6 +25,5 @@ jobs:
         working-directory: ./bicep/modules/identity
         run: |
           bicep-docs --input main.bicep --verbose
-          echo
           cat README.md
 
