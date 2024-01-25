@@ -22,4 +22,9 @@ jobs:
         run: go install github.com/christosgalano/bicep-docs/cmd/bicep-docs@latest
       
       - name: Generate docs
-        run: bicep-docs --input ./bicep --verbose
+        working-directory: ./bicep/modules/identity
+        run: |
+          bicep-docs --input main.bicep --verbose
+          echo
+          cat README.md
+
