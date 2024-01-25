@@ -10,8 +10,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       
-      - name: Generate documentation for Bicep modules
-        uses: christosgalano/bicep-docs@main
-        with:
-          input: bicep
-          verbose: true
+      - run: |
+          which az
+          ll /bin
+          ll /usr/local/bin
+      # - name: Generate documentation for Bicep modules
+      #   uses: christosgalano/bicep-docs@main
+      #   with:
+      #     input: bicep
+      #     verbose: true
