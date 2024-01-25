@@ -19,7 +19,7 @@ jobs:
           go-version: '1.21'
 
       - name: Install bicep-docs
-        run: go install github.com/azure/bicep/cmd/bicep-docs@latest
+        run: go install github.com/christosgalano/bicep-docs/cmd/bicep-docs@latest
       
       - name: Generate docs
         run: bicep-docs --input ./bicep --verbose
