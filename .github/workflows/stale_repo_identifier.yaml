@@ -12,7 +12,7 @@ jobs:
       contents: read
       issues: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Run stale_repos tool
       uses: github/stale-repos@v1
@@ -34,7 +34,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create issue
-      uses: peter-evans/create-issue-from-file@v4
+      uses: peter-evans/create-issue-from-file@v5
       with:
         issue-number: ${{ env.issue_number }}
         title: Stale repository report
