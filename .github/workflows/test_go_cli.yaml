@@ -5,7 +5,18 @@ on:
     inputs:
       repo:
         description: 'Repository name'
+        type: choice
         required: true
+        options:
+          - 'bruh'
+          - 'bicep-docs'
+      version:
+        description: 'Version'
+        type: choice
+        required: true
+        options:
+          - 'v1.0.0'
+          - 'v1.1.0'
 
 jobs:
   test:
@@ -21,16 +32,16 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-            Invoke-WebRequest -Uri https://github.com/christosgalano/${{ inputs.repo }}/releases/download/v1.0.0/${{ inputs.repo }}_windows_amd64.zip -OutFile ${{ inputs.repo }}.zip
+            Invoke-WebRequest -Uri https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_windows_amd64.zip -OutFile ${{ inputs.repo }}.zip
             Expand-Archive -Path ${{ inputs.repo }}.zip -DestinationPath . -Force
       
       - name: Download Linux/MacOS
         if: runner.os != 'Windows'
         run: |
           if [[ "${{ runner.os }}" == "macOS" ]]; then
-            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/v1.0.0/${{ inputs.repo }}_darwin_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
+            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_darwin_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
           else
-            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/v1.0.0/${{ inputs.repo }}_linux_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
+            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_linux_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
           fi
           tar xzf ${{ inputs.repo }}.tar.gz
           chmod +x ${{ inputs.repo }}
