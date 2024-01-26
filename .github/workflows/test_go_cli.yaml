@@ -11,12 +11,9 @@ on:
           - 'bruh'
           - 'bicep-docs'
       version:
-        description: 'Version'
-        type: choice
+        description: 'Version (vX.X.X)'
+        type: string
         required: true
-        options:
-          - 'v1.0.0'
-          - 'v1.1.0'
 
 jobs:
   test:
