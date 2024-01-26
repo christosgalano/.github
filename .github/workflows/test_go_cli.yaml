@@ -39,7 +39,9 @@ jobs:
         run: |
           if [[ "${{ runner.os }}" == "Windows" ]]; then
             ./${{ inputs.repo }}.exe --help
+            ./${{ inputs.repo }}.exe --version
           else
             ./${{ inputs.repo }} --help
+            ./${{ inputs.repo }} --version
           fi
 
