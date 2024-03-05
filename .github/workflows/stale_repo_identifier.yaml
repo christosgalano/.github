@@ -2,8 +2,6 @@ name: stale-repo-identifier
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: '0 9 1 * *'
 
 jobs:
   identify:
