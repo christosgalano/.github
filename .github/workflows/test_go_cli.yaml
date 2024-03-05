@@ -16,46 +16,40 @@ on:
         required: true
 
 jobs:
-  t1:
-    runs-on: ubuntu-latest
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
     steps:
-      - run: curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
-      - run: syft version
-
-  # test:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [ubuntu-latest, windows-latest, macos-latest]
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #   steps:
-  #     - name: Download Windows
-  #       if: runner.os == 'Windows'
-  #       shell: pwsh
-  #       run: |
-  #           Invoke-WebRequest -Uri https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_windows_amd64.zip -OutFile ${{ inputs.repo }}.zip
-  #           Expand-Archive -Path ${{ inputs.repo }}.zip -DestinationPath . -Force
+      - name: Download Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+            Invoke-WebRequest -Uri https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_windows_amd64.zip -OutFile ${{ inputs.repo }}.zip
+            Expand-Archive -Path ${{ inputs.repo }}.zip -DestinationPath . -Force
       
-  #     - name: Download Linux/MacOS
-  #       if: runner.os != 'Windows'
-  #       run: |
-  #         if [[ "${{ runner.os }}" == "macOS" ]]; then
-  #           wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_darwin_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
-  #         else
-  #           wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_linux_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
-  #         fi
-  #         tar xzf ${{ inputs.repo }}.tar.gz
-  #         chmod +x ${{ inputs.repo }}
+      - name: Download Linux/MacOS
+        if: runner.os != 'Windows'
+        run: |
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_darwin_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
+          else
+            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_linux_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
+          fi
+          tar xzf ${{ inputs.repo }}.tar.gz
+          chmod +x ${{ inputs.repo }}
       
-  #     - name: Test CLI
-  #       run: |
-  #         if [[ "${{ runner.os }}" == "Windows" ]]; then
-  #           ./${{ inputs.repo }}.exe --help
-  #           ./${{ inputs.repo }}.exe --version
-  #         else
-  #           ./${{ inputs.repo }} --help
-  #           ./${{ inputs.repo }} --version
-  #         fi
+      - name: Test CLI
+        run: |
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            ./${{ inputs.repo }}.exe --help
+            ./${{ inputs.repo }}.exe --version
+          else
+            ./${{ inputs.repo }} --help
+            ./${{ inputs.repo }} --version
+          fi
 
