@@ -2,12 +2,6 @@
 
 Repository used to provide administrative capabilities to other repositories.
 
-## Base files
-
-- [**Pull request templates**](./PULL_REQUEST_TEMPLATE)
-- [**Issue templates**](./ISSUE_TEMPLATE)
-- [**Code of conduct**](./CODE_OF_CONDUCT.md)
-
 ## Utility workflows
 
 - Identify stale repositories: [**stale_repo_identifier**](.github/workflows/stale_repo_identifier.yaml)
