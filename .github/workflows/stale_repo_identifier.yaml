@@ -22,8 +22,5 @@ jobs:
         EXEMPT_TOPICS: "keep,template"
         INACTIVE_DAYS: 365
 
-    - name: Print output of stale_repos tool
-      run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"
-
     - name: Create issue
       run: gh issue edit 4 --body-file stale_repos.md --repo christosgalano/.github
