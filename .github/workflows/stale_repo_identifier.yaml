@@ -25,16 +25,12 @@ jobs:
     - name: Print output of stale_repos tool
       run: echo "${{ steps.stale-repos.outputs.inactiveRepos }}"
 
-    - name: Check for the stale report issue
-      run: |
-        ISSUE_NUMBER=$(gh search issues "Stale repository report" --match title --json number --jq ".[0].number")
-        echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_ENV"
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    # - name: Check for the stale report issue
+    #   run: |
+    #     ISSUE_NUMBER=$(gh search issues "Stale repository report" --match title --json number --jq ".[0].number")
+    #     echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_ENV"
+    #   env:
+    #     GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create issue
-      uses: peter-evans/create-issue-from-file@v5
-      with:
-        title: Stale repository report
-        issue-number: ${{ env.issue_number }}
-        content-filepath: ${{ github.workspace }}/stale_repos.md
+      run: gh issue edit 8 --body-file stale_repos.md --repo christosgalano/.github
