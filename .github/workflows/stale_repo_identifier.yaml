@@ -24,3 +24,5 @@ jobs:
 
     - name: Create issue
       run: gh issue edit 4 --body-file stale_repos.md --repo christosgalano/.github
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
