@@ -5,12 +5,14 @@ on:
 
 jobs:
   identify:
+    name: Identify Stale Repositories
     runs-on: ubuntu-latest
     permissions:
       contents: read
       issues: write
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v4
 
     - name: Run stale_repos tool
       uses: github/stale-repos@v1
@@ -38,6 +40,6 @@ jobs:
       with:
         issue-number: ${{ env.issue_number }}
         title: Stale repository report
-        content-filepath: ./stale_repos.md
+        content-filepath: stale_repos.md
         assignees: christosgalano
         token: ${{ secrets.GITHUB_TOKEN }}
