@@ -27,7 +27,9 @@ jobs:
     - name: Check for the stale report issue
       run: |
         ISSUE_NUMBER=$(gh search issues "Stale repository report" --match title --json number --jq ".[0].number")
+        echo "Issue number: $ISSUE_NUMBER"
         echo "issue_number=$ISSUE_NUMBER" >> "$GITHUB_ENV"
+        ls -al
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
