@@ -25,6 +25,6 @@ jobs:
         INACTIVE_DAYS: 365
 
     - name: Update issue
-      run: gh issue edit 4 --body-file stale_repos.md --repo christosgalano/.github
+      run: gh issue edit 4 --body-file stale_repos.md --repo ${{ github.repository }}
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
