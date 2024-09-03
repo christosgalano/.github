@@ -23,7 +23,6 @@ jobs:
         GH_TOKEN: ${{ secrets.STALE_REPOS_TOKEN }}
         EXEMPT_TOPICS: "keep,template"
         INACTIVE_DAYS: 365
-        ACTIVITY_METHOD: "pushed"
         ADDITIONAL_METRICS: "release,pr"
 
     - name: Update issue
