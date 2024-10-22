@@ -1,0 +1,14 @@
+name: test-go-cli
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: sleep
+        run: sleep 120
