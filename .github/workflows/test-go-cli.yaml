@@ -15,24 +15,43 @@ on:
         required: true
 
 jobs:
-  choco:
-    runs-on: windows-latest
+  update-choco:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Update nuspec version
+        run: |
+          version="1.5.1" 
+
+          sed -i "s|<version>.*</version>|<version>${version}</version>|" bicep-docs.nuspec
+          cat bicep-docs.nuspec
+          
+          sed -i "s|<releaseNotes>.*</releaseNotes>|<releaseNotes>https://github.com/christosgalano/bicep-docs/releases/tag/v${version}</releaseNotes>|" bicep-docs.nuspec
+          cat bicep-docs.nuspec
+
+
+  # choco:
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
       
-      - name: Verify Chocolatey installation
-        run: choco --version
+  #     - name: Verify Chocolatey installation
+  #       run: choco --version
 
-      - name: Install CLI
-        run: |
-          cd test
-          choco install bicep-docs -s .
+  #     - name: Install CLI
+  #       run: |
+  #         cd test
+  #         choco install bicep-docs -s .
 
-      - name: Test CLI
-        run: |
-          ${{ inputs.repo }} --help
-          ${{ inputs.repo }} --version
+  #     - name: Test CLI
+  #       run: |
+  #         ${{ inputs.repo }} --help
+  #         ${{ inputs.repo }} --version
   # test:
   #   runs-on: ${{ matrix.os }}
   #   strategy:

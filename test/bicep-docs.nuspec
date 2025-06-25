@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>bicep-docs</id>
+    <version>1.5.0</version>
+    <title>bicep-docs</title>
+    <authors>Christos Galanopoulos</authors>
+    <owners>Christos Galanopoulos</owners>
+    <projectUrl>https://github.com/christosgalano/bicep-docs</projectUrl>
+    <licenseUrl>https://github.com/christosgalano/bicep-docs/blob/main/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Bicep Docs is a CLI tool to generate documentation for Bicep templates.</description>
+    <releaseNotes>https://github.com/christosgalano/bicep-docs/releases/tag/v1.5.0</releaseNotes>
+    <tags>bicep azure docs documentation</tags>
+    <summary>Command-line tool to generate documentation for Bicep templates.</summary>
+    <projectSourceUrl>https://github.com/christosgalano/bicep-docs</projectSourceUrl>
+    <docsUrl>https://github.com/christosgalano/bicep-docs/blob/main/README.md</docsUrl>
+    <bugTrackerUrl>https://github.com/christosgalano/bicep-docs/issues</bugTrackerUrl>
+    <packageSourceUrl>https://github.com/christosgalano/bicep-docs-choco</packageSourceUrl>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>
