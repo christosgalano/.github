@@ -15,78 +15,75 @@ on:
         required: true
 
 jobs:
-  update-choco:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
+  binaries:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Download Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+            Invoke-WebRequest -Uri https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_windows_amd64.zip -OutFile ${{ inputs.repo }}.zip
+            Expand-Archive -Path ${{ inputs.repo }}.zip -DestinationPath . -Force
+      
+      - name: Download Linux/MacOS
+        if: runner.os != 'Windows'
+        run: |
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_darwin_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
+          else
+            wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_linux_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
+          fi
+          tar xzf ${{ inputs.repo }}.tar.gz
+          chmod +x ${{ inputs.repo }}
+      
+      - name: Test CLI
+        run: |
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            ./${{ inputs.repo }}.exe --help
+            ./${{ inputs.repo }}.exe --version
+          else
+            ./${{ inputs.repo }} --help
+            ./${{ inputs.repo }} --version
+          fi
+
+  brew:
+    runs-on: macos-latest
+    steps:
+      - name: Verify Homebrew installation
+        run: brew --version
+
+      - name: Update Homebrew
+        run: brew update
+
+      - name: Install CLI
+        run: |
+          brew tap christosgalano/christosgalano
+          brew install ${{ inputs.repo }}
+
+      - name: Test CLI
+        run: |
+          ${{ inputs.repo }} --help
+          ${{ inputs.repo }} --version
+
+  choco:
+    runs-on: windows-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Verify Chocolatey installation
+        run: choco --version
 
-      - name: Update nuspec version
-        working-directory: test
+      - name: Install CLI
+        run: choco install ${{ inputs.repo }}
+
+      - name: Test CLI
         run: |
-          version="1.5.1" 
-
-          sed -i "s|<version>.*</version>|<version>${version}</version>|" bicep-docs.nuspec
-          cat bicep-docs.nuspec
-          
-          sed -i "s|<releaseNotes>.*</releaseNotes>|<releaseNotes>https://github.com/christosgalano/bicep-docs/releases/tag/v${version}</releaseNotes>|" bicep-docs.nuspec
-          cat bicep-docs.nuspec
-
-
-  # choco:
-  #   runs-on: windows-latest
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v4
-      
-  #     - name: Verify Chocolatey installation
-  #       run: choco --version
-
-  #     - name: Install CLI
-  #       run: |
-  #         cd test
-  #         choco install bicep-docs -s .
-
-  #     - name: Test CLI
-  #       run: |
-  #         ${{ inputs.repo }} --help
-  #         ${{ inputs.repo }} --version
-  # test:
-  #   runs-on: ${{ matrix.os }}
-  #   strategy:
-  #     matrix:
-  #       os: [ubuntu-latest, windows-latest, macos-latest]
-  #   defaults:
-  #     run:
-  #       shell: bash
-  #   steps:
-  #     - name: Download Windows
-  #       if: runner.os == 'Windows'
-  #       shell: pwsh
-  #       run: |
-  #           Invoke-WebRequest -Uri https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_windows_amd64.zip -OutFile ${{ inputs.repo }}.zip
-  #           Expand-Archive -Path ${{ inputs.repo }}.zip -DestinationPath . -Force
-      
-  #     - name: Download Linux/MacOS
-  #       if: runner.os != 'Windows'
-  #       run: |
-  #         if [[ "${{ runner.os }}" == "macOS" ]]; then
-  #           wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_darwin_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
-  #         else
-  #           wget https://github.com/christosgalano/${{ inputs.repo }}/releases/download/${{ inputs.version }}/${{ inputs.repo }}_linux_amd64.tar.gz -O ${{ inputs.repo }}.tar.gz
-  #         fi
-  #         tar xzf ${{ inputs.repo }}.tar.gz
-  #         chmod +x ${{ inputs.repo }}
-      
-  #     - name: Test CLI
-  #       run: |
-  #         if [[ "${{ runner.os }}" == "Windows" ]]; then
-  #           ./${{ inputs.repo }}.exe --help
-  #           ./${{ inputs.repo }}.exe --version
-  #         else
-  #           ./${{ inputs.repo }} --help
-  #           ./${{ inputs.repo }} --version
-  #         fi
-
+          ${{ inputs.repo }} --help
+          ${{ inputs.repo }} --version
