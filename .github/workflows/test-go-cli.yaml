@@ -18,6 +18,9 @@ jobs:
   choco:
     runs-on: windows-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
       - name: Verify Chocolatey installation
         run: choco --version
 
