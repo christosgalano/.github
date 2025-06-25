@@ -22,7 +22,9 @@ jobs:
         run: choco --version
 
       - name: Install CLI
-        run: choco install ${{ inputs.repo }}
+        run: |
+          cd test
+          choco install bicep-docs -s .
 
       - name: Test CLI
         run: |
