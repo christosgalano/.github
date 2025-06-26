@@ -81,7 +81,7 @@ jobs:
         run: choco --version
 
       - name: Install CLI
-        run: choco install ${{ inputs.repo }} --version=1.5.0
+        run: choco install ${{ inputs.repo }} --version=${{ inputs.version }}
       - name: Test CLI
         run: |
           ${{ inputs.repo }} --help
